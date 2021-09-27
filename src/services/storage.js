@@ -22,7 +22,7 @@ async function init() {
             editCat,
             deleteCat,
             getBreeds,
-
+            addBreed
         }
         next();
     }
@@ -81,6 +81,14 @@ async function getBreeds() {
     return breedData;
 };
 
+async function addBreed(breed) {
+    if (!breedData.includes(breed)) {
+        breedData.push(breed);
+        const updated = JSON.stringify(breedData);
+        return await fs.writeFile(path.resolve(__dirname,'../data/breeds.json'), updated, 'utf-8');
+    }
+}
+
 module.exports = {
     init,
     getAll,
@@ -89,7 +97,7 @@ module.exports = {
     editCat,
     deleteCat,
     getBreeds,
-
+    addBreed
 }
 
 
