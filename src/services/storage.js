@@ -1,5 +1,6 @@
 const fs = require('fs/promises');
-const path = require('path')
+const path = require('path');
+const uniqid = require('uniqid');
 
 let catData = {};
 let breedData = {};
@@ -18,6 +19,7 @@ async function init() {
             getAll,
             getCatById,
             createCat,
+            deleteCat,
             getBreeds,
 
         }
@@ -39,10 +41,21 @@ async function createCat(cat, oldPath) {
     await fs.copyFile(oldPath, newPath);
     await fs.unlink(oldPath);
 
-    cat.id = setId(catData.length);
-    catData.push(cat);
-    let updated = JSON.stringify(catData, null, 2);
-    return await fs.writeFile('./data/cats.json', updated, 'utf-8');
+    const id = uniqid();
+    catData[id]=cat
+    const updated = JSON.stringify(catData, null, 2);
+    return await fs.writeFile(path.resolve(__dirname, '../data/cats.json'), updated, 'utf-8');
+};
+
+async function deleteCat(id) {
+    const cat=catData[id];
+    const filePath = path.normalize(path.join(__dirname, '../content/images',cat.image));
+    await fs.unlink(filePath);
+    
+    delete catData[id];
+
+    const updated = JSON.stringify(catData, null, 2);
+    return await fs.writeFile(path.resolve(__dirname, '../data/cats.json'), updated, 'utf-8');
 };
 
 async function getBreeds() {
@@ -54,14 +67,9 @@ module.exports = {
     getAll,
     getCatById,
     createCat,
+    deleteCat,
     getBreeds,
 
-}
-
-function setId(num) {
-    let id = ('00000000' + (Math.random() * 99999999 * num | 0).toString(16)).slice(-8);
-
-    return id;
 }
 
 

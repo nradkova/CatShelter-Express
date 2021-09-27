@@ -3,19 +3,20 @@ const formidable = require('formidable');
 const formParse = require('../middlewares/formParser');
 
 router.get('/new', async (req, res) => {
-    const breeds = await req.storage.getBreeds();
-    res.render('addCat', { title: 'Add Cat', breeds })
+    try {
+        const breeds = await req.storage.getBreeds();
+        res.render('addCat', { title: 'Add Cat', breeds });
+    } catch (error) {
+        res.redirect('/404');
+    }
 });
 
 router.post('/new', async (req, res) => {
-    console.log("in")
-
     const form = formidable();
     const [fields, file] = await formParse(req, form);
-    const cat=Object.assign({},fields,{image:file.upload.name});
-    console.log(cat)
+    const cat = Object.assign({}, fields, { image: file.upload.name });
     try {
-        await req.storage.createCat(cat,file.upload.path);
+        await req.storage.createCat(cat, file.upload.path);
         res.redirect('/');
     } catch (error) {
         res.redirect('/404');
@@ -24,15 +25,15 @@ router.post('/new', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
-    const cat = await req.storage.getCatById(id);
-    const breedsData = await req.storage.getBreeds();
-    const breeds = breedsData.map(x => {
-        if (x == cat.breed) {
-            return Object.assign({}, { name: x, selected: 'selected' });
-        }
-        return Object.assign({}, { name: x });
-    });
-    if (cat) {
+    try {
+        const cat = await req.storage.getCatById(id);
+        const breedsData = await req.storage.getBreeds();
+        const breeds = breedsData.map(x => {
+            if (x == cat.breed) {
+                return Object.assign({}, { name: x, selected: 'selected' });
+            }
+            return Object.assign({}, { name: x });
+        });
         const ctx = {
             title: 'Cat Details',
             cat,
@@ -40,8 +41,20 @@ router.get('/:id', async (req, res) => {
             breeds
         }
         res.render('editCat', ctx);
-    } else {
+    } catch (error) {
+        res.redirect('/404');
+    }
+
+});
+
+router.post('/:id/delete', async (req, res) => {
+    const id = req.params.id;
+    try {
+        await req.storage.deleteCat(id);
+        res.redirect('/');
+    } catch (error) {
         res.redirect('/404');
     }
 });
+
 module.exports = router;

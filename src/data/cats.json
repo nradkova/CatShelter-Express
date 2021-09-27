@@ -1,35 +1,35 @@
 {
-  "00000000":{
+  "00000000": {
     "name": "Bombay",
     "description": "Nice",
     "breed": "Persian",
     "image": "cat-2143332_640.jpg"
   },
-  "031491b3":{
+  "031491b3": {
     "name": "Gary",
     "description": "Cute",
     "breed": "Fluffy Cat",
     "image": "animal-6591125_640.jpg"
   },
-  "0770146e":{
+  "0770146e": {
     "name": "Garfield",
     "description": "Lazyyyy",
     "breed": "Persian",
     "image": "cat-6492741_640.jpg"
   },
-  "0a7a1201":{
+  "0a7a1201": {
     "name": "Fluffy",
     "description": "Tiny",
     "breed": "Unknown",
     "image": "cat-1192026_640.jpg"
   },
-  "008a9eeb":{
+  "008a9eeb": {
     "name": "Mike",
     "description": "Wants to play",
     "breed": "Persian",
     "image": "cat-1151519_640.jpg"
   },
-  "19ba62b5":{
+  "19ba62b5": {
     "name": "Tommy",
     "description": "Loves to eat",
     "breed": "Persian",

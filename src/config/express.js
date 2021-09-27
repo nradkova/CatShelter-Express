@@ -1,6 +1,5 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
-let formidable = require('express-formidable');
 const path = require('path');
 
 const expressConfig = (app) => {
