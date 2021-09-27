@@ -47,6 +47,22 @@ router.get('/:id', async (req, res) => {
 
 });
 
+router.post('/:id', async (req, res) => {
+    const id = req.params.id;
+    const form = formidable();
+    const [fields, file] = await formParse(req, form);
+    const cat = Object.assign({}, fields);
+    const fileName=file.upload.name;
+    const filePath=fileName!=''?file.upload.path:'';
+
+    try {
+        await req.storage.editCat(id,cat,fileName, filePath);
+        res.redirect('/');
+    } catch (error) {
+        res.redirect('/404');
+    }
+});
+
 router.post('/:id/delete', async (req, res) => {
     const id = req.params.id;
     try {
