@@ -73,4 +73,37 @@ router.post('/:id/delete', async (req, res) => {
     }
 });
 
+router.get('/:id/shelter', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const cat = await req.storage.getCatById(id);
+        const breedsData = await req.storage.getBreeds();
+        const breeds = breedsData.map(x => {
+            if (x == cat.breed) {
+                return Object.assign({}, { name: x, selected: 'selected' });
+            }
+            return Object.assign({}, { name: x });
+        });
+        const ctx = {
+            title: 'Cat Shelter',
+            cat,
+            id,
+            breeds
+        }
+        res.render('catShelter', ctx);
+    } catch (error) {
+        res.redirect('/404');
+    }
+});
+
+router.post('/:id/shelter', async (req, res) => {
+    const id = req.params.id;
+    try {
+        await req.storage.deleteCat(id);
+        res.redirect('/');
+    } catch (error) {
+        res.redirect('/404');
+    }
+});
+
 module.exports = router;
