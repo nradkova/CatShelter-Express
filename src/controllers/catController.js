@@ -101,7 +101,7 @@ router.get('/:id/shelter', async (req, res) => {
     }
 });
 
-router.post('/:id/delete', async (req, res) => {
+router.post('/:id/shelter', async (req, res) => {
     const id = req.params.id;
     try {
         await req.storage.deleteCat(id);
