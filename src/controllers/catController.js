@@ -85,7 +85,7 @@ router.get('/:id/shelter', async (req, res) => {
             return Object.assign({}, { name: x });
         });
         const ctx = {
-            title: 'Cat Shelter',
+            title: 'Cat New Home',
             cat,
             id,
             breeds

@@ -28,8 +28,11 @@ async function init() {
     }
 }
 
-async function getAll() {
-    const cats = Object.entries(catData).map(([id, prop]) => Object.assign({}, { id }, prop));
+async function getAll(query) {
+    let cats = Object.entries(catData).map(([id, prop]) => Object.assign({}, { id }, prop));
+    if(query){
+        cats=cats.filter(x=>x.name.toLowerCase().startsWith(query.toLowerCase()));
+    }
     return cats;
 };
 
