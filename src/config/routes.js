@@ -6,7 +6,6 @@ const notFoundController=require("../controllers/notFoundController");
 
 const routesConfig = (app) => {
     app.use('/', homeController);
-    // app.use('/search', homeController);
     app.use('/breeds', breedController);
     app.use('/cats', catController);
     app.use('*',notFoundController)
