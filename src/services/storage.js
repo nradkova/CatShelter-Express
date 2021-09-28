@@ -37,10 +37,10 @@ async function getCatById(id) {
     return catData[id];
 };
 
-async function createCat(cat, oldPath) {
+async function createCat(cat, uploadPath) {
     const newPath = path.normalize(path.join(__dirname, '../content/images', cat.image));
-    await fs.copyFile(oldPath, newPath);
-    await fs.unlink(oldPath);
+    await fs.copyFile(uploadPath, newPath);
+    await fs.unlink(uploadPath);
 
     const id = uniqid();
     catData[id] = cat;
@@ -99,20 +99,3 @@ module.exports = {
     getBreeds,
     addBreed
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
