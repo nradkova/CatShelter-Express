@@ -15,8 +15,13 @@ router.post('', async (req, res) => {
     const form = new formidable();
     const [field] = await formParse(req, form);
     try {
-        await req.storage.addBreed(field.breed);
-        res.redirect('/');
+      const created =  await req.storage.addBreed(field.breed);
+      if(created){
+          res.redirect('/');
+      }else{
+          const err='A breed with the same name already exists. Please, enter a new one!'
+          res.render('addBreed', { title: 'Add Breed', err });
+      }
     } catch (error) {
         res.redirect('/404');
     }

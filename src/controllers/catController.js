@@ -15,6 +15,11 @@ router.post('/new', async (req, res) => {
     const form = formidable();
     const [fields, file] = await formParse(req, form);
     const cat = Object.assign({}, fields, { image: file.upload.name });
+    if (cat.name == '' || cat.description == '' || cat.image == '') {
+        const breeds = await req.storage.getBreeds();
+        const err = "All fields are required. Please, fill the missing ones!"
+        return res.render('addCat', { title: 'Add Cat',cat, breeds, err });
+    }
     try {
         await req.storage.createCat(cat, file.upload.path);
         res.redirect('/');

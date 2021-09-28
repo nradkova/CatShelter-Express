@@ -88,7 +88,8 @@ async function addBreed(breed) {
     if (!breedData.includes(breed)) {
         breedData.push(breed);
         const updated = JSON.stringify(breedData);
-        return await fs.writeFile(path.resolve(__dirname,'../data/breeds.json'), updated, 'utf-8');
+        await fs.writeFile(path.resolve(__dirname,'../data/breeds.json'), updated, 'utf-8');
+        return breed;
     }
 }
 

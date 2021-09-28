@@ -2,9 +2,9 @@
         <form action="/cats/new" method="POST" class="cat-form" enctype="multipart/form-data">
             <h2>Add Cat</h2>
             <label for="name">Name</label>
-            <input name="name" type="text" id="name">
+            <input name="name" type="text" id="name" value="{{cat.name}}">
             <label for="description">Description</label>
-            <textarea name="description" id="description"></textarea>
+            <textarea name="description" id="description">{{cat.description}}</textarea>
             <label for="image">Image</label>
             <input name="upload" type="file" id="image">
             <label for="group">Breed</label>
@@ -15,6 +15,7 @@
             </select>
             <button type="submit">Add Cat</button>
         </form>
+         <h3 class="message">{{err}}</h3>
     </main>
 
 

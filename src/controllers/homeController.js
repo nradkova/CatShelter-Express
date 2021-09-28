@@ -16,7 +16,11 @@ router.post('/', async (req, res) => {
     const [field] = await formParse(req, form);
     try {
         const cats = await req.storage.getAll(field.search);
-        res.render('catalog', { title: 'Cat Shelter', cats });
+        let err='';
+        if(cats.length==0){
+            err='Sorry, we do not have cat with such name.'
+        }
+        res.render('catalog', { title: 'Cat Shelter', cats ,err});
     } catch (error) {
         res.redirect('/404');
     }
